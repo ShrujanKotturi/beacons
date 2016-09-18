@@ -1,5 +1,5 @@
 var connection = require('./sql');
-var FCM = require('fcm').FCM;
+var FCM = require('fcm-push');
 var util = require('util');
 
 function User() {
