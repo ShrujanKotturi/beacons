@@ -20,9 +20,11 @@ function User() {
         connection.acquire(function (err, con){
            console.log('region ' + region);
            console.log(deviceId);
+
            con.query('select * from discountList where region=? order by RAND() LIMIT 1',[region], function(err, result) {
                if(result.length != 0){
-                   res.send(result);
+                   console.log(result);
+                   
                }
                else{
                    res.send({'status' : 'User does not exist'});
