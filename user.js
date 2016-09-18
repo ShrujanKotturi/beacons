@@ -46,11 +46,12 @@ function User() {
                               }
                           };
 
-                          var FCM = require('fcm-push');
+                          var FCM = require('fcm-push-notif');
                           var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
                           var fcm = FCM(serverkey);
 
                           console.log('message to fcm ' + util.inspect(message));
+
                           fcm.send(message, function (err, response) {
                               if(err){
                                   console.log('Something went wrong');
@@ -62,7 +63,7 @@ function User() {
                    });
                }
                else{
-                   res.send({'status' : 'User does not exist'});
+                   res.send({'status' : 'The beacon is not registered with a category'});
                }
            });
            con.release();
