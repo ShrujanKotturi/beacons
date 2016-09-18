@@ -1,10 +1,6 @@
 var connection = require('./sql');
 var FCM = require('fcm-node');
 
-var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
-var fcm = FCM(serverkey);
-
-
 function User() {
     this.get = function (log, res) {
         connection.acquire(function(err, con) {
@@ -40,7 +36,7 @@ function User() {
                          console.log(err);
                       }else{
                           var message = {
-                              to : result2,
+                              to : result2[0].tokenid,
                               collaspe_key : 'Notification from InClass03 App',
                               notification : {
                                   title : 'Powered by Beacons',
@@ -48,7 +44,10 @@ function User() {
                               }
                           };
 
-                          console.log('message to fcm ' + message);
+                          var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
+                          var fcm = FCM(serverkey);
+
+                          console.log('message to fcm %j' + message);
                           fcm.send(message, function (err, response) {
                               if(err){
                                   console.log('Something went wrong');
