@@ -7,8 +7,10 @@ module.exports = {
             //res.send('hey');
         });
 
-        app.post('/notify', function (req, res){
-            user.notify(req.body.region, req.body.deviceid,  res);
+        app.get('/notify', function (req, res){
+            console.log('region' + req.body.region);
+            console.log('deviceid '+ req.body.deviceid);
+            user.notify(req.query.region, req.query.deviceid, res);
         });
 
         app.post('/register', function (req, res){
