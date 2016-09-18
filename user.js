@@ -35,12 +35,12 @@ function User() {
                    deviceNotification = 'Check out ' + result[0].pname +' are ' + result[0].discount + '% off';
                    console.log('device notification ' + deviceNotification);
 
-                   con.query('select top 1 tokenid from users where deviceid=?', [deviceId], function (err, result2){
+                   con.query('select tokenid from users where deviceid=?', [deviceId], function (err, result2){
                       if(err){
                          console.log(err);
                       }else{
                           var message = {
-                              to : result2[0].tokenid,
+                              to : result2,
                               collaspe_key : 'Notification from InClass03 App',
                               notification : {
                                   title : 'Powered by Beacons',
