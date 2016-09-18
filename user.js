@@ -29,8 +29,9 @@ function User() {
            con.query('select * from discountList where region=? order by RAND() LIMIT 1',[region], function(err, result) {
 
                if(result.length != 0){
-
+                   console.log('result length '+result.length);
                    console.log('discount list ' + result[0]);
+                   console.log('discount list ' + result[1]);
                    deviceNotification = 'Check out ' + result[0].pname +' are ' + result[0].discount + '% off';
                    console.log('device notification ' + deviceNotification);
 
@@ -39,7 +40,6 @@ function User() {
                           var message = {
                               to : result2[0].tokenid,
                               collaspe_key : 'Notification from InClass03 App',
-
                               notification : {
                                   title : 'Powered by Beacons',
                                   body : deviceNotification
