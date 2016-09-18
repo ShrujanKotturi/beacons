@@ -55,6 +55,8 @@ function User() {
                               }
                           });
 
+                      }else{
+                          console.log(err);
                       }
                    });
                }
