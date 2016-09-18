@@ -53,7 +53,7 @@ function User() {
 
                           // Set up the sender with you API key, prepare your recipients' registration tokens.
                           var sender = new gcm.Sender('AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac');
-                          var regTokens = result2[0].tokenid;
+                          var regTokens = [result2[0].tokenid];
 
                           sender.send(message, { registrationTokens: regTokens }, function (err, response) {
                               if(err) {
