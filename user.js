@@ -1,8 +1,9 @@
 var connection = require('./sql');
 var FCM = require('fcm').FCM;
+var util = require('util');
 
 function User() {
-    
+
     this.get = function (log, res) {
         connection.acquire(function(err, con) {
             console.log(log);
