@@ -8,11 +8,11 @@ module.exports = {
         });
 
         app.post('/notify', function (req, res){
-            user.notify(req.query.region, req.query.deviceid,  res);
+            user.notify(req.body.region, req.body.deviceid,  res);
         });
 
         app.post('/register', function (req, res){
-            user.register(req.query.deviceid, req.query.tokenid, res);
+            user.register(req.body.deviceid, req.body.tokenid, res);
         });
     }
 };
