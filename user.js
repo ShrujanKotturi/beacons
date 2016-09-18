@@ -1,7 +1,7 @@
 var connection = require('./sql');
 
 function User() {
-    this.get = function (log,res) {
+    this.get = function (log, res) {
         connection.acquire(function(err, con) {
             console.log(log);
             con.query('select * from discountList where region=?',[log], function(err, result) {
@@ -9,13 +9,14 @@ function User() {
                     res.send(result);
                 }
                 else{
-                    res.send({'status':'User does not exist'});
+                    res.send({'status' : 'User does not exist'});
                 }
             });
+            con.release();
         });
     };
 
-    this.notify = function (region , deviceId, res) {
+    this.notify = function (region, deviceId, res) {
         connection.acquire(function (err, con){
            console.log('region ' + region);
            console.log(deviceId);
@@ -24,9 +25,10 @@ function User() {
                    res.send(result);
                }
                else{
-                   res.send({'status':'User does not exist'});
+                   res.send({'status' : 'User does not exist'});
                }
            });
+           con.release();
         });
     };
 
@@ -41,9 +43,11 @@ function User() {
               if(err){
                   console.log(err);
               }else{
-                  result.send({status: 0, message: 'token registered successfully'});
+                  console.log(result);
+                  res.send({status: 0, message: 'token registered successfully'});
               }
           });
+          con.release();
         });
     }
 
