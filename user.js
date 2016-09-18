@@ -1,5 +1,5 @@
 var connection = require('./sql');
-var FCM = require('fcm-push');
+
 var util = require('util');
 
 function User() {
@@ -46,10 +46,11 @@ function User() {
                               }
                           };
 
+                          var FCM = require('fcm-push');
                           var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
                           var fcm = FCM(serverkey);
 
-                          console.log('message to fcm %j' + message);
+                          console.log('message to fcm ' + util.inspect(message));
                           fcm.send(message, function (err, response) {
                               if(err){
                                   console.log('Something went wrong');
