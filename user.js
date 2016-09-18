@@ -1,7 +1,8 @@
 var connection = require('./sql');
-var FCM = require('fcm-node');
+var FCM = require('fcm').FCM;
 
 function User() {
+    
     this.get = function (log, res) {
         connection.acquire(function(err, con) {
             console.log(log);
@@ -25,9 +26,9 @@ function User() {
            con.query('select * from discountList where region=? order by RAND() LIMIT 1',[region], function(err, result) {
 
                if(result.length != 0){
-                   console.log('result length '+result.length);
-                   console.log('discount list ' + result[0]);
-                   console.log('discount list ' + result[1]);
+                   console.log('result length ' + result.length);
+                   console.log('discount list ' + util.inspect(result[0]));
+
                    deviceNotification = 'Check out ' + result[0].pname +' are ' + result[0].discount + '% off';
                    console.log('device notification ' + deviceNotification);
 
