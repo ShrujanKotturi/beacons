@@ -1,11 +1,11 @@
 var connection = require('./sql');
 
 function User() {
-    this.get = function(log,res) {
+    this.get = function (log,res) {
         connection.acquire(function(err, con) {
-            console.log('query');
+            console.log(log);
             con.query('select * from discountList where region=?',[log], function(err, result) {
-                if(result.length!=0){
+                if(result.length != 0){
                     res.send(result);
                 }
                 else{
@@ -14,6 +14,38 @@ function User() {
             });
         });
     };
+
+    this.notify = function (region , deviceId, res) {
+        connection.acquire(function (err, con){
+           console.log('region ' + region);
+           console.log(deviceId);
+           con.query('select * from discountList where region=? order by RAND() LIMIT 1',[region], function(err, result) {
+               if(result.length != 0){
+                   res.send(result);
+               }
+               else{
+                   res.send({'status':'User does not exist'});
+               }
+           });
+        });
+    };
+
+    this.register = function (deviceid, tokenid, res) {
+        connection.acquire(function (err, con){
+          console.log('deviceid ' + deviceid);
+          console.log(tokenid);
+          var users = {'deviceid' : deviceid,
+                        'tokenid' : tokenid
+          };
+          con.query('insert into users set ?', users, function (err, res) {
+              if(err){
+                  res.send({status: 1, message: 'User creation failed'});
+              }else{
+                  res.send({status: 0, message: 'User created successfully'});
+              }
+          });
+        });
+    }
 
 }
 module.exports = new User();
