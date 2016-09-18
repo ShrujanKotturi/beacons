@@ -37,28 +37,46 @@ function User() {
                       if(err){
                          console.log(err);
                       }else{
-                          var message = {
-                              to : result2[0].tokenid,
-                              collaspe_key : 'Notification from InClass03 App',
-                              notification : {
-                                  title : 'Powered by Beacons',
-                                  body : deviceNotification
+                          var FCM = require('node-gcm');
+                          // var message = {
+                          //     to : result2[0].tokenid,
+                          //     collaspe_key : 'Notification from InClass03 App',
+                          //     notification : {
+                          //         title : 'Powered by Beacons',
+                          //         body : deviceNotification
+                          //     }
+                          // };
+
+                          var message = new gcm.Message({
+                              data: { key1: deviceNotification }
+                          });
+
+                          // Set up the sender with you API key, prepare your recipients' registration tokens.
+                          var sender = new gcm.Sender('AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac');
+                          var regTokens = result2[0].tokenid;
+
+                          sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+                              if(err) {
+                                  console.error(err);
                               }
-                          };
-
-                          var FCM = require('fcm-push-notif');
-                          var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
-                          var fcm = FCM(serverkey);
-
-                          console.log('message to fcm ' + util.inspect(message));
-
-                          fcm.send(message, function (err, response) {
-                              if(err){
-                                  console.log('Something went wrong');
-                              }else{
-                                  console.log('Success sent response ' + response);
+                              else {
+                                  console.log(response);
                               }
                           });
+
+
+                          // var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
+                          // var fcm = FCM(serverkey);
+                          //
+                          // console.log('message to fcm ' + util.inspect(message));
+                          //
+                          // fcm.send(message, function (err2, response) {
+                          //     if(err2){
+                          //         console.log('Something went wrong');
+                          //     }else{
+                          //         console.log('Success sent response ' + response);
+                          //     }
+                          // });
                       }
                    });
                }
