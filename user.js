@@ -1,5 +1,5 @@
 var connection = require('./sql');
-
+var request = require('request');
 var util = require('util');
 
 function User() {
@@ -37,7 +37,7 @@ function User() {
                       if(err){
                          console.log(err);
                       }else{
-                          var gcm = require('node-gcm');
+                          //var gcm = require('node-gcm');
                           // var message = {
                           //     to : result2[0].tokenid,
                           //     collaspe_key : 'Notification from InClass03 App',
@@ -47,23 +47,7 @@ function User() {
                           //     }
                           // };
 
-                          var message = new gcm.Message({
-                              data: { key1: deviceNotification }
-                          });
-
-                          // Set up the sender with you API key, prepare your recipients' registration tokens.
-                          var sender = new gcm.Sender('AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac');
-                          var regTokens = [result2[0].tokenid];
-
-                          sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-                              if(err) {
-                                  console.error(err);
-                              }
-                              else {
-                                  console.log(response);
-                              }
-                          });
-
+                          sendMessageToUser([result2[0].tokenid], deviceNotification);
 
                           // var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
                           // var fcm = FCM(serverkey);
@@ -107,5 +91,35 @@ function User() {
         });
     }
 
+
 }
 module.exports = new User();
+
+function sendMessageToUser(deviceId, message) {
+    request({
+        url: 'https://fcm.googleapis.com/fcm/send',
+        method: 'POST',
+        headers: {
+            'Content-Type': ' application/json',
+            'Authorization': 'key=AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac'
+        },
+        body: JSON.stringify(
+            {
+                "data": {
+                    "message": message
+                },
+                "to": deviceId
+            }
+        )
+    }, function (error, response, body) {
+        if (error) {
+            console.error(error, response, body);
+        }
+        else if (response.statusCode >= 400) {
+            console.error('HTTP Error: ' + response.statusCode + ' - ' + response.statusMessage + '\n' + body);
+        }
+        else {
+            console.log('Done!')
+        }
+    });
+};
