@@ -37,11 +37,11 @@ function User() {
           var users = {'deviceid' : deviceid,
                         'tokenid' : tokenid
           };
-          con.query('insert into users set ?', users, function (err, res) {
+          con.query('insert into users set ?', users, function (err, result) {
               if(err){
                   console.log(err);
               }else{
-                  res.send({status: 0, message: 'token registered successfully'});
+                  result.send({status: 0, message: 'token registered successfully'});
               }
           });
         });
