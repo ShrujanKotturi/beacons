@@ -37,7 +37,7 @@ function User() {
                       if(err){
                          console.log(err);
                       }else{
-                          var FCM = require('node-gcm');
+                          var gcm = require('node-gcm');
                           // var message = {
                           //     to : result2[0].tokenid,
                           //     collaspe_key : 'Notification from InClass03 App',
