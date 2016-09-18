@@ -39,9 +39,9 @@ function User() {
           };
           con.query('insert into users set ?', users, function (err, res) {
               if(err){
-                  res.send({status: 1, message: 'User creation failed'});
+                  console.log(err);
               }else{
-                  res.send({status: 0, message: 'User created successfully'});
+                  res.send({status: 0, message: 'token registered successfully'});
               }
           });
         });
