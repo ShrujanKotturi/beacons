@@ -105,6 +105,7 @@ function sendMessageToUser(deviceId, message) {
         },
         body: JSON.stringify(
             {
+                "priority":"high",
                 "notification": {
                     "text": message
                 },
