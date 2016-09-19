@@ -2,7 +2,7 @@ var connection = require('./sql');
 var request = require('request');
 var util = require('util');
 var FCM = require('fcm-node');
-var SERVER_API_KEY = AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac;
+var SERVER_API_KEY = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
 var fcmCli = new FCM(SERVER_API_KEY);
 
 function User() {
