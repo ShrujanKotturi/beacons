@@ -56,7 +56,7 @@ function User() {
                                   console.error(err)
                               }else{
                                   console.log(res2);
-                                  res2.send({status : 0, message: 'Message sent to the user' });
+                                  res.send({status : 0, message: 'Message sent to the user' });
                               }
                           });
 
