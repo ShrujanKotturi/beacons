@@ -1,6 +1,9 @@
 var connection = require('./sql');
 var request = require('request');
 var util = require('util');
+var FCM = require('fcm-node');
+var SERVER_API_KEY = AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac;
+var fcmCli = new FCM(SERVER_API_KEY);
 
 function User() {
 
@@ -37,6 +40,25 @@ function User() {
                       if(err){
                          console.log(err);
                       }else{
+                          fcmCli = new FCM(SERVER_API_KEY);
+
+                          var payloadOk = {
+                              to : result2[0].tokenid,
+                              priority : 'high',
+                              notification: {
+                                  title : 'Powered by beacons',
+                                  body : deviceNotification
+                              }
+                          }
+
+                          fcmCli.send(payloadOk, function (err, res) {
+                              if(err){
+                                  console.error(err)
+                              }else{
+                                  console.log(res);
+                              }
+                          });
+
                           //var gcm = require('node-gcm');
                           // var message = {
                           //     to : result2[0].tokenid,
@@ -47,7 +69,7 @@ function User() {
                           //     }
                           // };
 
-                          sendMessageToUser([result2[0].tokenid], deviceNotification);
+                          //sendMessageToUser([result2[0].tokenid], deviceNotification);
 
                           // var serverkey = 'AIzaSyCBzbxcsX4AicGrMhsK5CLOe2yNz-j4Sac';
                           // var fcm = FCM(serverkey);
@@ -76,8 +98,9 @@ function User() {
         connection.acquire(function (err, con){
           console.log('deviceid ' + deviceid);
           console.log(tokenid);
-          var users = {'deviceid' : deviceid,
-                        'tokenid' : tokenid
+          var users = {
+              'deviceid' : deviceid,
+              'tokenid' : tokenid
           };
           con.query('insert into users set ?', users, function (err, result) {
               if(err){
@@ -124,3 +147,4 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 };
+
