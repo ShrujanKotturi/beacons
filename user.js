@@ -51,12 +51,12 @@ function User() {
                               }
                           }
 
-                          fcmCli.send(payloadOk, function (err, res) {
+                          fcmCli.send(payloadOk, function (err, res2) {
                               if(err){
                                   console.error(err)
                               }else{
-                                  console.log(res);
-                                  res.send({status : 0, message: 'Message sent to the user' });
+                                  console.log(res2);
+                                  res2.send({status : 0, message: 'Message sent to the user' });
                               }
                           });
 
